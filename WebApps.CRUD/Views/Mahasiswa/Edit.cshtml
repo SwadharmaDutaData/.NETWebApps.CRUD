@@ -1,0 +1,61 @@
+﻿@model WebApps.CRUD.Models.MahasiswaModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit Mahasiswa</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ID" class="form-control" />
+            @*<div class="form-group">
+                <label asp-for="ID" class="control-label"></label>
+                <span asp-validation-for="ID" class="text-danger"></span>
+            </div>*@
+            <div class="form-group">
+                <label asp-for="Npm" class="control-label"></label>
+                <input asp-for="Npm" class="form-control" />
+                <span asp-validation-for="Npm" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NamaMahasiswa" class="control-label"></label>
+                <input asp-for="NamaMahasiswa" class="form-control" />
+                <span asp-validation-for="NamaMahasiswa" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Alamat" class="control-label"></label>
+                <input asp-for="Alamat" class="form-control" />
+                <span asp-validation-for="Alamat" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="JenisKelamin" class="control-label"></label>
+                <input asp-for="JenisKelamin" class="form-control" />
+                <span asp-validation-for="JenisKelamin" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsActive" /> @Html.DisplayNameFor(model => model.IsActive)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="IndexMahasiswa">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

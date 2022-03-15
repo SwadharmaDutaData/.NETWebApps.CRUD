@@ -1,0 +1,41 @@
+﻿@using WebApps.CRUD.Models;
+
+@model IEnumerable<MahasiswaModel>
+
+<a class="btn btn-success" asp-controller="Mahasiswa" asp-action="Create">Create Mahasiswa</a>
+<table class="table">
+    <thead>
+        <tr>
+            <td>ID</td>
+            <td>NPM</td>
+            <td>Nama Mahasiswa</td>
+            <td>Email Address</td>
+            <td>Alamat Lengkap</td>
+            <td>Jenis Kelamin</td>
+            <td>Status</td>
+            <td>Aksi</td>
+        </tr>
+    </thead>
+    <tbody>
+       @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.ID</td>
+                <td>@item.Npm</td>
+                <td>@item.NamaMahasiswa</td>
+                <td>@item.Email</td>
+                <td>@item.Alamat</td>
+                <td>@item.JenisKelamin</td>
+                <td>@(item.IsActive == true ? "Status Aktif" : "Status Tidak Aktif")</td>
+                <td>
+                    <a class="btn btn-primary" asp-controller="Mahasiswa" asp-action="Details" asp-route-id="@item.ID">Detail MHS</a>
+                    <a class="btn btn-warning" asp-controller="Mahasiswa" asp-action="Edit" asp-route-id="@item.ID">Edit</a>
+                    <a class="btn btn-danger" asp-controller="Mahasiswa" asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@{
+}
