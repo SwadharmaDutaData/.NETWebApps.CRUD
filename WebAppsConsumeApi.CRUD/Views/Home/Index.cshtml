@@ -1,0 +1,43 @@
+﻿@model List<TblJurusanModel>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+<div class="row">
+    <table class="table">
+        <thead>
+            <tr>
+                <td>No</td>
+                <td>Nama Jurusan</td>
+                <td>Deskripsi Jurusan</td>
+                <td>Created Time</td>
+                <td>Status</td>
+                <td>Action</td>
+            </tr>
+        </thead>
+        <tbody>
+            @{ int number = 1; }
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@(number++)</td>
+                    <td>@item.NamaJurusan</td>
+                    <td>@item.DeskripsiJurusan</td>
+                    <td>@(Convert.ToDateTime(item.CreatedTime).ToString("dd MMMM yyyy"))</td>
+                    <td>@(item.IsActive == true ? "Aktif" : "Tidak Aktif")</td>
+                    <td>
+                        <a class="btn btn-primary" asp-action="Details" asp-controller="Home" asp-route-id="@item.JurusanId">Detail</a>
+                        <a  class="btn btn-warning" asp-action="GetById" asp-controller="Home" asp-route-id="@item.JurusanId">Edit</a>
+                        <a  class="btn btn-danger" asp-action="Delete" asp-controller="Home" asp-route-id="@item.JurusanId">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
