@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Data.SqlClient;
 using WebApps.CRUD.Helpers;
 using WebApps.CRUD.Models;
+using WebApps.CRUD.Models.ViewModels;
 
 namespace WebApps.CRUD.Controllers
 {
@@ -11,7 +12,7 @@ namespace WebApps.CRUD.Controllers
         // GET: MahasiswaController
         public ActionResult IndexMahasiswa()
         {
-            List<MahasiswaModel> objList = new List<MahasiswaModel>();
+            MahasiswaViewModel mahasiswaView = new MahasiswaViewModel();
             SqlConnection connection = new SqlConnection(Constants.CONNECTION_STRINGS);
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = connection;
@@ -33,14 +34,14 @@ namespace WebApps.CRUD.Controllers
                     model.JenisKelamin = reader["JenisKelamin"].ToString();
                     model.IsActive = Convert.ToBoolean(reader["IsActive"]);
 
-                    objList.Add(model);
+                    mahasiswaView.ListMahasiswa.Add(model);
                 }
             }
 
             if (connection.State == System.Data.ConnectionState.Open)
                 connection.Close();
 
-            return View(objList);
+            return View(mahasiswaView);
         }
 
         // GET: MahasiswaController/Details/5
@@ -81,7 +82,7 @@ namespace WebApps.CRUD.Controllers
         // POST: MahasiswaController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind("Npm, NamaMahasiswa, Email, Alamat, JenisKelamin, IsActive")] MahasiswaModel objmahasiswa)
+        public ActionResult Create(MahasiswaViewModel objmahasiswa)
         {
             try
             {
@@ -91,7 +92,7 @@ namespace WebApps.CRUD.Controllers
                 cmd.CommandText = @$"INSERT INTO [dbo].[Mahasiswa]
                                        ([NPM], [NamaMahasiswa], [Email], [Alamat], [JenisKelamin], [IsActive])
                                  VALUES
-                                       ('{objmahasiswa.Npm}', '{objmahasiswa.NamaMahasiswa}', '{objmahasiswa.Email}', '{objmahasiswa.Alamat}', '{objmahasiswa.JenisKelamin}', {(objmahasiswa.IsActive == true ? 1 : 0)})";
+                                       ('{objmahasiswa.Mahasiswa.Npm}', '{objmahasiswa.Mahasiswa.NamaMahasiswa}', '{objmahasiswa.Mahasiswa.Email}', '{objmahasiswa.Mahasiswa.Alamat}', '{objmahasiswa.Mahasiswa.JenisKelamin}', {(objmahasiswa.Mahasiswa.IsActive == true ? 1 : 0)})";
 
                 connection.Open();
                 int result = cmd.ExecuteNonQuery();

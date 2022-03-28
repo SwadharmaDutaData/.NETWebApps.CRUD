@@ -1,8 +1,14 @@
 ﻿@using WebApps.CRUD.Models;
 
-@model IEnumerable<MahasiswaModel>
+@model WebApps.CRUD.Models.ViewModels.MahasiswaViewModel
 
-<a class="btn btn-success" asp-controller="Mahasiswa" asp-action="Create">Create Mahasiswa</a>
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+    Create New Mahasiswa
+</button>
+@*<a class="btn btn-success" asp-controller="Mahasiswa" asp-action="Create">Create Mahasiswa</a>*@
+
 <table class="table">
     <thead>
         <tr>
@@ -17,7 +23,7 @@
         </tr>
     </thead>
     <tbody>
-       @foreach (MahasiswaModel item in Model)
+        @foreach (MahasiswaModel item in Model.ListMahasiswa)
         {
             <tr>
                 <td>@item.ID</td>
@@ -36,6 +42,62 @@
         }
     </tbody>
 </table>
+
+<!-- Modal -->
+<form asp-controller="Mahasiswa" asp-action="Create" method="post">
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Mahasiswa.ID" class="form-control" />
+                    @*<div class="form-group">
+                        <label asp-for="ID" class="control-label"></label>
+                        <span asp-validation-for="ID" class="text-danger"></span>
+                        </div>*@
+                    <div class="form-group">
+                        <label asp-for="Mahasiswa.Npm" class="control-label"></label>
+                        <input asp-for="Mahasiswa.Npm" class="form-control" />
+                        <span asp-validation-for="Mahasiswa.Npm" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Mahasiswa.NamaMahasiswa" class="control-label"></label>
+                        <input asp-for="Mahasiswa.NamaMahasiswa" class="form-control" />
+                        <span asp-validation-for="Mahasiswa.NamaMahasiswa" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Mahasiswa.Email" class="control-label"></label>
+                        <input asp-for="Mahasiswa.Email" class="form-control" />
+                        <span asp-validation-for="Mahasiswa.Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Mahasiswa.Alamat" class="control-label"></label>
+                        <input asp-for="Mahasiswa.Alamat" class="form-control" />
+                        <span asp-validation-for="Mahasiswa.Alamat" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Mahasiswa.JenisKelamin" class="control-label"></label>
+                        <input asp-for="Mahasiswa.JenisKelamin" class="form-control" />
+                        <span asp-validation-for="Mahasiswa.JenisKelamin" class="text-danger"></span>
+                    </div>
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="Mahasiswa.IsActive" /> @Html.DisplayNameFor(model => model.Mahasiswa.IsActive)
+                        </label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
 
 @{
 }
