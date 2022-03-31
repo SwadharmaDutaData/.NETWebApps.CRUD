@@ -1,0 +1,47 @@
+﻿@model WebAppsConsumeApi.CRUD.Models.TblJurusanModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details Jurusan</h1>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.JurusanId)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.JurusanId)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.NamaJurusan)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.NamaJurusan)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DeskripsiJurusan)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DeskripsiJurusan)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CreatedTime)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CreatedTime)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IsActive)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IsActive)
+        </dd>
+    </dl>
+</div>
+<div>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.JurusanId }, new { @class = "btn btn-warning" }) 
+    <a class="btn btn-primary" asp-controller="Jurusan" asp-action="IndexJurusan">Back to List</a>
+</div>

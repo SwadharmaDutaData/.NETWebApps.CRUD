@@ -1,0 +1,144 @@
+﻿@model WebAppsConsumeApi.CRUD.Models.TblJurusanModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Delete Jurusan</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            <input id="jurId" type="hidden" asp-for="JurusanId" />
+            @Html.DisplayNameFor(model => model.JurusanId)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.JurusanId)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.NamaJurusan)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.NamaJurusan)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DeskripsiJurusan)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DeskripsiJurusan)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CreatedTime)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CreatedTime)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IsActive)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IsActive)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input id="submit" type="button" value="Delete" class="btn btn-danger" />  
+        <a class="btn btn-primary" asp-controller="Jurusan" asp-action="IndexJurusan">Back to List</a>
+    </form>
+</div>
+
+<script type="text/javascript">
+    /*******************************************************/
+    /* VERION NATIVE JAVASCRIPT WITH JQUERY AJAX FRAMEWORK */
+    /*******************************************************/
+    let submit = document.getElementById('submit');
+    submit.addEventListener('click', function(){
+        let postUrl = '@(Url.Action("DeleteJurusan", "Jurusan"))/' + $('#jurId').val();
+
+         $.ajax({
+            url : postUrl,
+            type : 'POST',
+            data : {
+                id: $('#jurId').val()
+            },
+            success: function(data, status, xhr) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Successfully Deleted',
+                    text: data.responseMessage,
+                    footer: data.responseBody.content
+                });
+
+                setTimeout(function(){
+                    window.location.href = '@(Url.Action("IndexJurusan", "Jurusan"))';
+                }, 1500);
+
+                clearTimeout(1500);
+            },
+            error: function(jqXhr, textStatus, errorMessage) {
+                if(jqXhr.readyState === 4 && textStatus === 'error'){
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Something went wrong!',
+                        footer: jqXhr.responseText
+                    });
+                }
+            }
+        });
+    }, false);
+    /***********************************************************/
+    /* END VERION NATIVE JAVASCRIPT WITH JQUERY AJAX FRAMEWORK */
+    /***********************************************************/
+
+    /*********************************************/
+    /* VERION JQUERY FRAMEWORK WITH JQUERY AJAX */
+    /*********************************************/
+    //$(document).ready(function(){
+    //    $('#submit').on('click', function() {
+    //        let postUrl = '/' + $('#jurId').val();
+
+    //         $.ajax({
+    //            url : postUrl,
+    //            type : 'POST',
+    //            data : {
+    //                id: $('#jurId').val()
+    //            },
+    //            success: function(data, status, xhr) {
+    //                Swal.fire({
+    //                    icon: 'success',
+    //                    title: 'Successfully Updated',
+    //                    text: data.responseMessage,
+    //                    footer: data.responseBody.content
+    //                });
+
+    //                setTimeout(function(){
+    //                    window.location.href = '';
+    //                }, 1500);
+
+    //                clearTimeout(1500);
+    //            },
+    //            error: function(jqXhr, textStatus, errorMessage) {
+    //                if(jqXhr.readyState === 4 && textStatus === 'error'){
+    //                    Swal.fire({
+    //                        icon: 'error',
+    //                        title: 'Oops...',
+    //                        text: 'Something went wrong!',
+    //                        footer: jqXhr.responseText
+    //                    });
+    //                }
+    //            }
+    //        });
+    //    });
+    //});
+    /************************************************/
+    /* END VERION JQUERY FRAMEWORK WITH JQUERY AJAX */
+    /************************************************/
+</script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_DateWithMomentJsPartial");}
+    @{await Html.RenderPartialAsync("_SwertAlert2Partial");}
+}

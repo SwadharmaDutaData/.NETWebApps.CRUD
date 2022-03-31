@@ -1,0 +1,153 @@
+﻿@model WebAppsConsumeApi.CRUD.Models.TblJurusanModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit Jurusan</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input id="jurId" type="hidden" asp-for="JurusanId" class="form-control" />
+            @*<div class="form-group">
+                <label asp-for="JurusanId" class="control-label"></label>
+                <input asp-for="JurusanId" class="form-control" />
+                <span asp-validation-for="JurusanId" class="text-danger"></span>
+            </div>*@
+            <div class="form-group">
+                <label asp-for="NamaJurusan" class="control-label"></label>
+                <input id="nmJurusan" asp-for="NamaJurusan" class="form-control" />
+                <span asp-validation-for="NamaJurusan" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DeskripsiJurusan" class="control-label"></label>
+                <input id="descJurusan" asp-for="DeskripsiJurusan" class="form-control" />
+                <span asp-validation-for="DeskripsiJurusan" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CreatedTime" class="control-label"></label>
+                <input id="crtDate" readonly="readonly" asp-for="CreatedTime" class="form-control" />
+                <span asp-validation-for="CreatedTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IsActive" class="control-label"></label>
+                <input id="status" readonly="readonly" asp-for="IsActive" class="form-control" />
+                <span asp-validation-for="IsActive" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="button" id="submit" value="Save" class="btn btn-success" /> 
+                <a class="btn btn-primary" asp-controller="Jurusan" asp-action="IndexJurusan">Back to List</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript">
+    /*******************************************************/
+    /* VERION NATIVE JAVASCRIPT WITH JQUERY AJAX FRAMEWORK */
+    /*******************************************************/
+    let submit = document.getElementById('submit');
+    submit.addEventListener('click', function(){
+        let postUrl = '@(Url.Action("EditJurusan", "Jurusan"))/' + $('#jurId').val();
+        let curDate = moment($('#crtDate').val()).format('YYYY/MM/DD');
+        let postData = {
+            JurusanId : $('#jurId').val(),
+            NamaJurusan : $('#nmJurusan').val(),
+            DeskripsiJurusan : $('#descJurusan').val(),
+            CreatedTime : curDate,
+            IsActive : $('#status').val()
+        };
+
+         $.ajax({
+            url : postUrl,
+            type : 'POST',
+            data : postData,
+            success: function(data, status, xhr) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Successfully Updated',
+                    text: data.responseMessage,
+                    footer: data.responseBody.content
+                });
+
+                setTimeout(function(){
+                    window.location.href = '@(Url.Action("IndexJurusan", "Jurusan"))';
+                }, 1500);
+
+                clearTimeout(1500);
+            },
+            error: function(jqXhr, textStatus, errorMessage) {
+                if(jqXhr.readyState === 4 && textStatus === 'error'){
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Something went wrong!',
+                        footer: jqXhr.responseText
+                    });
+                }
+            }
+        });
+    }, false);
+    /***********************************************************/
+    /* END VERION NATIVE JAVASCRIPT WITH JQUERY AJAX FRAMEWORK */
+    /***********************************************************/
+
+    /*********************************************/
+    /* VERION JQUERY FRAMEWORK WITH JQUERY AJAX */
+    /*********************************************/
+    //$(document).ready(function(){
+    //    $('#submit').on('click', function() {
+    //        let postUrl = '/' + $('#jurId').val();
+    //        let curDate = moment($('#crtDate').val()).format('YYYY/MM/DD');
+    //        let postData = {
+    //            JurusanId : $('#jurId').val(),
+    //            NamaJurusan : $('#nmJurusan').val(),
+    //            DeskripsiJurusan : $('#descJurusan').val(),
+    //            CreatedTime : curDate,
+    //            IsActive : $('#status').val()
+    //        };
+
+    //         $.ajax({
+    //            url : postUrl,
+    //            type : 'POST',
+    //            data : postData,
+    //            success: function(data, status, xhr) {
+    //                Swal.fire({
+    //                    icon: 'success',
+    //                    title: 'Successfully Updated',
+    //                    text: data.responseMessage,
+    //                    footer: data.responseBody.content
+    //                });
+
+    //                setTimeout(function(){
+    //                    window.location.href = '';
+    //                }, 1500);
+
+    //                clearTimeout(1500);
+    //            },
+    //            error: function(jqXhr, textStatus, errorMessage) {
+    //                if(jqXhr.readyState === 4 && textStatus === 'error'){
+    //                    Swal.fire({
+    //                        icon: 'error',
+    //                        title: 'Oops...',
+    //                        text: 'Something went wrong!',
+    //                        footer: jqXhr.responseText
+    //                    });
+    //                }
+    //            }
+    //        });
+    //    });
+    //});
+    /************************************************/
+    /* END VERION JQUERY FRAMEWORK WITH JQUERY AJAX */
+    /************************************************/
+</script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{await Html.RenderPartialAsync("_DateWithMomentJsPartial");}
+    @{await Html.RenderPartialAsync("_SwertAlert2Partial");}
+}

@@ -1,0 +1,60 @@
+﻿@model IEnumerable<WebAppsConsumeApi.CRUD.Models.TblJurusanModel>
+
+@{
+    ViewData["Title"] = "IndexJurusan";
+}
+
+<h1>Index Jurusan</h1>
+
+<p>
+    <a class="btn btn-success" asp-controller="Jurusan" asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.JurusanId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NamaJurusan)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DeskripsiJurusan)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsActive)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.JurusanId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NamaJurusan)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DeskripsiJurusan)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsActive)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new {  id = item.JurusanId  }, new { @class = "btn btn-warning" })
+                    @Html.ActionLink("Details", "Details", new { id = item.JurusanId }, new { @class = "btn btn-primary" })
+                    @Html.ActionLink("Delete", "Delete", new { id = item.JurusanId }, new { @class = "btn btn-danger" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

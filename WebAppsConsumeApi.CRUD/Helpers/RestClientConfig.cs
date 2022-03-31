@@ -111,7 +111,7 @@ namespace WebAppsConsumeApi.CRUD.Helpers
             }
         }
 
-        public TSources AddTSource(TSources sources)
+        public string AddTSource(TSources sources)
         {
             try
             {
@@ -126,13 +126,13 @@ namespace WebAppsConsumeApi.CRUD.Helpers
                 if (ResponseMessage.IsSuccessStatusCode)
                 {
                     string resContent = ResponseMessage.Content.ReadAsStringAsync().Result;
-                    TSources res = JsonSerializer.Deserialize<TSources>(resContent);
+                    //TSources res = JsonSerializer.Deserialize<TSources>(resContent);
 
-                    return res;
+                    return resContent;
                 }
                 else
                 {
-                    return null;
+                    return "";
                 }
             }
             catch (HttpRequestException hte)
@@ -141,7 +141,7 @@ namespace WebAppsConsumeApi.CRUD.Helpers
             }
         }
 
-        public async Task<TSources> AddTSourceAsync(TSources sources)
+        public async Task<string> AddTSourceAsync(TSources sources)
         {
             try
             {
@@ -156,13 +156,13 @@ namespace WebAppsConsumeApi.CRUD.Helpers
                 if (ResponseMessage.IsSuccessStatusCode)
                 {
                     string resContent = await ResponseMessage.Content.ReadAsStringAsync();
-                    TSources res = JsonSerializer.Deserialize<TSources>(resContent);
+                    //TSources res = JsonSerializer.Deserialize<TSources>(resContent);
 
-                    return res;
+                    return resContent;
                 }
                 else
                 {
-                    return null;
+                    return "";
                 }
             }
             catch (HttpRequestException hte)
@@ -171,28 +171,29 @@ namespace WebAppsConsumeApi.CRUD.Helpers
             }
         }
 
-        public TSources UpdateTSource(int id, TSources sources)
+        public string UpdateTSource(int id, TSources sources)
         {
             try
             {
+                JsonContent content = JsonContent.Create(sources);
                 RequestMessage = new HttpRequestMessage()
                 {
-                    Content = JsonContent.Create(sources),
+                    Content = content,
                     Method = HttpMethod.Put,
-                    RequestUri = new Uri($"{_baseAddress}{_addressSufix}/{id}")
+                    RequestUri = new Uri($"{_baseAddress}{_addressSufix}{id}")
                 };
                 ResponseMessage = _httpClient.SendAsync(RequestMessage).Result;
 
                 if (ResponseMessage.IsSuccessStatusCode)
                 {
                     string resContent = ResponseMessage.Content.ReadAsStringAsync().Result;
-                    TSources res = JsonSerializer.Deserialize<TSources>(resContent);
+                    //TSources res = JsonSerializer.Deserialize<TSources>(resContent);
 
-                    return res;
+                    return resContent;
                 }
                 else
                 {
-                    return null;
+                    return "";
                 }
             }
             catch (HttpRequestException hte)
@@ -201,7 +202,7 @@ namespace WebAppsConsumeApi.CRUD.Helpers
             }
         }
 
-        public async Task<TSources> UpdateTSourceAsync(int id, TSources sources)
+        public async Task<string> UpdateTSourceAsync(int id, TSources sources)
         {
             try
             {
@@ -216,13 +217,13 @@ namespace WebAppsConsumeApi.CRUD.Helpers
                 if (ResponseMessage.IsSuccessStatusCode)
                 {
                     string resContent = await ResponseMessage.Content.ReadAsStringAsync();
-                    TSources res = JsonSerializer.Deserialize<TSources>(resContent);
+                    //TSources res = JsonSerializer.Deserialize<TSources>(resContent);
 
-                    return res;
+                    return resContent;
                 }
                 else
                 {
-                    return null;
+                    return "";
                 }
             }
             catch (HttpRequestException hte)
@@ -238,7 +239,7 @@ namespace WebAppsConsumeApi.CRUD.Helpers
                 RequestMessage = new HttpRequestMessage()
                 {
                     Method = HttpMethod.Delete,
-                    RequestUri = new Uri($"{_baseAddress}{_addressSufix}/{id}")
+                    RequestUri = new Uri($"{_baseAddress}{_addressSufix}{id}")
                 };
                 ResponseMessage = _httpClient.SendAsync(RequestMessage).Result;
 

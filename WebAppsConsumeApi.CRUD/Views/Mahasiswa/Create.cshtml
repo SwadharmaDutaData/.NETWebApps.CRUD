@@ -1,0 +1,170 @@
+﻿@model WebAppsConsumeApi.CRUD.Models.MahasiswaModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create Mahasiswa</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateMahasiswa">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @*<div class="form-group">
+                <label asp-for="Id" class="control-label"></label>
+                <input asp-for="Id" class="form-control" />
+                <span asp-validation-for="Id" class="text-danger"></span>
+            </div>*@
+            <div class="form-group">
+                <label asp-for="Npm" class="control-label"></label>
+                <input id="npm" asp-for="Npm" class="form-control" />
+                <span asp-validation-for="Npm" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NamaMahasiswa" class="control-label"></label>
+                <input id="nmMahasiswa" asp-for="NamaMahasiswa" class="form-control" />
+                <span asp-validation-for="NamaMahasiswa" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input id="email" asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Alamat" class="control-label"></label>
+                <input id="alamat" asp-for="Alamat" class="form-control" />
+                <span asp-validation-for="Alamat" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="JenisKelamin" class="control-label"></label>
+                <input id="jnsKel" asp-for="JenisKelamin" class="form-control" />
+                <span asp-validation-for="JenisKelamin" class="text-danger"></span>
+            </div>
+            @*<div class="form-group">
+                <label asp-for="IsActive" class="control-label"></label>
+                <input id="isActive" asp-for="IsActive" class="form-control" />
+                <span asp-validation-for="IsActive" class="text-danger"></span>
+            </div>*@
+            @*<div class="form-group">
+                <label asp-for="CreatedDate" class="control-label"></label>
+                <input asp-for="CreatedDate" class="form-control" />
+                <span asp-validation-for="CreatedDate" class="text-danger"></span>
+            </div>*@
+            <div class="form-group">
+                <input id="submit" type="button" value="Create" class="btn btn-primary" /> 
+                <a class="btn btn-primary" asp-controller="Mahasiswa" asp-action="IndexMahasiswa">Back to List</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript">
+    /*******************************************************/
+    /* NATIVE JAVASCRIPT WITH JQUERY AJAX FRAMEWORK VERION */
+    /*******************************************************/
+    let submit = document.getElementById('submit');
+    submit.addEventListener('click', function(){
+        let postUrl = '@(Url.Action("CreateMahasiswa", "Mahasiswa"))';
+        let curDate = moment().format('YYYY/MM/DD');
+        let postData = {
+            Id : 0,
+            Npm : $('#npm').val(),
+            NamaMahasiswa : $('#nmMahasiswa').val(),
+            Email : $('#email').val(),
+            Alamat : $('#alamat').val(),
+            JenisKelamin : $('#jnsKel').val(),
+            IsActive : true,
+            CreatedTime : curDate
+        };
+
+         $.ajax({
+            url : postUrl,
+            type : 'POST',
+            data : postData,
+            success: function(data, status, xhr) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Successfully Insert',
+                    text: data.responseMessage,
+                    footer: data.responseBody.content
+                });
+
+                setTimeout(function(){
+                    window.location.href = '@(Url.Action("IndexMahasiswa", "Mahasiswa"))';
+                }, 1500);
+
+                clearTimeout(1500);
+            },
+            error: function(jqXhr, textStatus, errorMessage) {
+                if(jqXhr.readyState === 4 && textStatus === 'error'){
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Something went wrong!',
+                        footer: jqXhr.responseText
+                    });
+                }
+            }
+        });
+    }, false);
+    /***********************************************************/
+    /* END NATIVE JAVASCRIPT WITH JQUERY AJAX FRAMEWORK VERION */
+    /***********************************************************/
+
+    /*********************************************/
+    /* JQUERY FRAMEWORK WITH JQUERY AJAX VERION */
+    /*********************************************/
+    //$(document).ready(function(){
+    //    $('#submit').on('click', function() {
+    //        let postUrl = '';
+    //        let curDate = moment().format('YYYY/MM/DD');
+    //        let postData = {
+    //            JurusanId : 0,
+    //            NamaJurusan : $('#nmJurusan').val(),
+    //            DeskripsiJurusan : $('#descJurusan').val(),
+    //            CreatedTime : curDate,
+    //            IsActive : true
+    //        };
+
+    //        $.ajax({
+    //            url : postUrl,
+    //            type : 'POST',
+    //            data : postData,
+    //            success: function(data, status, xhr) {
+    //                Swal.fire({
+    //                    icon: 'success',
+    //                    title: 'Successfully Insert',
+    //                    text: data.responseMessage,
+    //                    footer: data.responseBody.content
+    //                });
+
+    //                setTimeout(function(){
+    //                    window.location.href = '';
+    //                }, 1500);
+
+    //                clearTimeout(1500);
+    //            },
+    //            error: function(jqXhr, textStatus, errorMessage) {
+    //                if(jqXhr.readyState === 4 && textStatus === 'error'){
+    //                    Swal.fire({
+    //                        icon: 'error',
+    //                        title: 'Oops...',
+    //                        text: 'Something went wrong!',
+    //                        footer: jqXhr.responseText
+    //                    });
+    //                }
+    //            }
+    //        });
+    //    });
+    //});
+    /************************************************/
+    /* END JQUERY FRAMEWORK WITH JQUERY AJAX VERION */
+    /************************************************/
+</script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{await Html.RenderPartialAsync("_DateWithMomentJsPartial");}
+    @{await Html.RenderPartialAsync("_SwertAlert2Partial");}
+}

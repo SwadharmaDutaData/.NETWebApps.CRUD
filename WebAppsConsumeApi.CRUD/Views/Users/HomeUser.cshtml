@@ -1,0 +1,87 @@
+﻿@model IEnumerable<WebAppsConsumeApi.CRUD.Models.TblUserModel>
+
+@{
+    ViewData["Title"] = "HomeUser";
+}
+
+<h1>List Of User</h1>
+
+<p>
+    <a class="btn btn-success" asp-controller="Users" asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.UserId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Firstname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Lastname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Username)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EmailAddress)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Password)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsActive)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedDate)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        {
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Firstname)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Lastname)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Username)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EmailAddress)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Password)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsActive)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreatedDate)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new {  id = item.UserId  }, new { @class = "btn btn-warning" })
+                        @Html.ActionLink("Details", "Details", new { id = item.UserId }, new { @class = "btn btn-primary" })
+                        @Html.ActionLink("Delete", "Delete", new { id = item.UserId }, new { @class = "btn btn-danger" })
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="9" align="center">Data Not Found</td>
+            </tr>
+        }
+    </tbody>
+</table>

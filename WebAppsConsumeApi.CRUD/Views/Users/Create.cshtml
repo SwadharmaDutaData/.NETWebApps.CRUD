@@ -1,0 +1,173 @@
+﻿@model WebAppsConsumeApi.CRUD.Models.TblUserModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create User</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @*<div class="form-group">
+                <label asp-for="UserId" class="control-label"></label>
+                <input asp-for="UserId" class="form-control" />
+                <span asp-validation-for="UserId" class="text-danger"></span>
+            </div>*@
+            <div class="form-group">
+                <label asp-for="Firstname" class="control-label"></label>
+                <input id="firstname" asp-for="Firstname" class="form-control" />
+                <span asp-validation-for="Firstname" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Lastname" class="control-label"></label>
+                <input id="lastname" asp-for="Lastname" class="form-control" />
+                <span asp-validation-for="Lastname" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Username" class="control-label"></label>
+                <input id="username" asp-for="Username" class="form-control" />
+                <span asp-validation-for="Username" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EmailAddress" class="control-label"></label>
+                <input id="email" asp-for="EmailAddress" class="form-control" />
+                <span asp-validation-for="EmailAddress" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password" class="control-label"></label>
+                <input id="passwd" asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+           @* <div class="form-group">
+                <label asp-for="IsActive" class="control-label"></label>
+                <input asp-for="IsActive" class="form-control" />
+                <span asp-validation-for="IsActive" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CreatedDate" class="control-label"></label>
+                <input asp-for="CreatedDate" class="form-control" />
+                <span asp-validation-for="CreatedDate" class="text-danger"></span>
+            </div>*@
+            <div class="form-group">
+                <input id="submit" type="button" value="Create" class="btn btn-success" />  
+                <a class="btn btn-primary" asp-controller="Users" asp-action="HomeUser">Back to List</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript">
+    /*******************************************************/
+    /* NATIVE JAVASCRIPT WITH JQUERY AJAX FRAMEWORK VERION */
+    /*******************************************************/
+    let submit = document.getElementById('submit');
+    submit.addEventListener('click', function(){
+        let postUrl = '@(Url.Action("CreateUser", "Users"))';
+        let curDate = moment().format('YYYY/MM/DD');
+        let postData = {
+            UserId : 0,
+            Firstname : $('#firstname').val(),
+            Lastname : $('#lastname').val(),
+            Username : $('#username').val(),
+            EmailAddress : $('#email').val(),
+            Password : $('#passwd').val(),
+            IsActive : true,
+            CreatedTime : curDate
+        };
+
+         $.ajax({
+            url : postUrl,
+            type : 'POST',
+            data : postData,
+            success: function(data, status, xhr) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Successfully Insert',
+                    text: data.responseMessage,
+                    footer: data.responseBody.content
+                });
+
+                setTimeout(function(){
+                    window.location.href = '@(Url.Action("HomeUser", "Users"))';
+                }, 1500);
+
+                clearTimeout(1500);
+            },
+            error: function(jqXhr, textStatus, errorMessage) {
+                if(jqXhr.readyState === 4 && textStatus === 'error'){
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Something went wrong!',
+                        footer: jqXhr.responseText
+                    });
+                }
+            }
+        });
+    }, false);
+    /***********************************************************/
+    /* END NATIVE JAVASCRIPT WITH JQUERY AJAX FRAMEWORK VERION */
+    /***********************************************************/
+
+    /*********************************************/
+    /* JQUERY FRAMEWORK WITH JQUERY AJAX VERION */
+    /*********************************************/
+    //$(document).ready(function(){
+    //    $('#submit').on('click', function() {
+    //        let postUrl = '';
+    //        let curDate = moment().format('YYYY/MM/DD');
+    //        let postData = {
+    //            UserId : 0,
+    //            Firstname : $('#firstname').val(),
+    //            Lastname : $('#lastname').val(),
+    //            Username : $('#username').val(),
+    //            EmailAddress : $('#email').val(),
+    //            Password : $('#passwd').val(),
+    //            IsActive : true,
+    //            CreatedTime : curDate
+    //        };
+
+    //         $.ajax({
+    //            url : postUrl,
+    //            type : 'POST',
+    //            data : postData,
+    //            success: function(data, status, xhr) {
+    //                Swal.fire({
+    //                    icon: 'success',
+    //                    title: 'Successfully Insert',
+    //                    text: data.responseMessage,
+    //                    footer: data.responseBody.content
+    //                });
+
+    //                setTimeout(function(){
+    //                    window.location.href = '';
+    //                }, 1500);
+
+    //                clearTimeout(1500);
+    //            },
+    //            error: function(jqXhr, textStatus, errorMessage) {
+    //                if(jqXhr.readyState === 4 && textStatus === 'error'){
+    //                    Swal.fire({
+    //                        icon: 'error',
+    //                        title: 'Oops...',
+    //                        text: 'Something went wrong!',
+    //                        footer: jqXhr.responseText
+    //                    });
+    //                }
+    //            }
+    //        });
+    //    });
+    //});
+    /************************************************/
+    /* END JQUERY FRAMEWORK WITH JQUERY AJAX VERION */
+    /************************************************/
+</script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{await Html.RenderPartialAsync("_DateWithMomentJsPartial");}
+    @{await Html.RenderPartialAsync("_SwertAlert2Partial");}
+}
