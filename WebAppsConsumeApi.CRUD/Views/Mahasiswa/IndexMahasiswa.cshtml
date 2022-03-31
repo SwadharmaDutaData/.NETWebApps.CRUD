@@ -4,7 +4,7 @@
     ViewData["Title"] = "IndexMahasiswa";
 }
 
-<h1>Index Mahasiswa</h1>
+<h1>List Of Mahasiswa</h1>
 
 <p>
     <a class="btn btn-success" asp-controller="Mahasiswa" asp-action="Create">Create New</a>
@@ -40,39 +40,49 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @if (Model != null)
+        {
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Npm)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NamaMahasiswa)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Alamat)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.JenisKelamin)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsActive)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreatedDate)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new {  id=item.Id  }, new { @class = "btn btn-warning" })
+                        @Html.ActionLink("Details", "Details", new { id=item.Id }, new { @class = "btn btn-primary" })
+                        @Html.ActionLink("Delete", "Delete", new { id=item.Id }, new { @class = "btn btn-danger" })
+                    </td>
+                </tr>
+            }
+        }
+        else
         {
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Id)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Npm)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NamaMahasiswa)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Alamat)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.JenisKelamin)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IsActive)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CreatedDate)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new {  id=item.Id  }, new { @class = "btn btn-warning" }) 
-                    @Html.ActionLink("Details", "Details", new { id=item.Id }, new { @class = "btn btn-primary" }) 
-                    @Html.ActionLink("Delete", "Delete", new { id=item.Id }, new { @class = "btn btn-danger" })
-                </td>
+                <td colspan="9">Data Not Found</td>
             </tr>
         }
+
     </tbody>
 </table>

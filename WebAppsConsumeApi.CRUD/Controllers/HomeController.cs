@@ -17,37 +17,6 @@ namespace WebAppsConsumeApi.CRUD.Controllers
 
         public IActionResult Index()
         {
-            RestClientConfig<ResponseBodyModel<ResponseContentBodyModel<List<TblJurusanModel>>>> restClient = new RestClientConfig<ResponseBodyModel<ResponseContentBodyModel<List<TblJurusanModel>>>>(Constants.BASE_URL, Constants.GET_ALL_JURUSAN);
-            ResponseBodyModel<ResponseContentBodyModel<List<TblJurusanModel>>>  result = restClient.GetAll();
-            List<TblJurusanModel> listJurusan = result.ResponseBody.Content;
-            if (listJurusan != null && result.ErrorCode == 0)
-            {
-                return View(listJurusan);
-            }
-
-            return View();
-        }
-
-        public IActionResult Details(int id)
-        {
-            RestClientConfig<ResponseBodyModel<ResponseContentBodyModel<TblJurusanModel>>> restClient = new RestClientConfig<ResponseBodyModel<ResponseContentBodyModel<TblJurusanModel>>>(Constants.BASE_URL, Constants.GET_BY_ID_JURUSAN.Replace("{id}", id.ToString()));
-            ResponseBodyModel<ResponseContentBodyModel<TblJurusanModel>> result = restClient.GetSingle();
-            TblJurusanModel jurusan = result.ResponseBody.Content;
-            if (jurusan != null && result.ErrorCode == 0)
-            {
-                return View(jurusan);
-            }
-
-            return View();
-        }
-
-        public IActionResult GetById (int id)
-        {
-            return View();
-        }
-
-        public IActionResult Delete(int id)
-        {
             return View();
         }
 
